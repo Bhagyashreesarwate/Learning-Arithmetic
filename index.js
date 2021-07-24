@@ -1,4 +1,4 @@
-import { maxNumber, utilityFunction } from './utils.js'
+// import { maxNumber, utilityFunction } from './utils.js'
 
 let currentQA = {
     num1: 0,
@@ -25,6 +25,15 @@ function setNewQuestionAns() {
     currentQA.randomAnswerSequnce = generateRandomSequence(numberOfAnswerOptions)
     currentQA.currentPosition = -1
     console.log(JSON.stringify(currentQA))
+}
+
+function showNewQuestion() {
+    elemNum1.value = currentQA.num1
+    elemNum2.value = currentQA.num2
+    let num3 = currentQA.randomAnswerSequnce[0]
+    currentQA.currentPosition = 0
+    currentQA.num3 = num3
+    elemNum3.value = num3
 }
 
 function showNextAnswer() {
@@ -60,8 +69,76 @@ function startNewQuestion() {
     setKeyBoardHandler()
 }
 
-function setTimer() {
+function Timer(fn, t) {
+    var timerObj = setInterval(fn, t);
 
+    this.stop = function() {
+        if (timerObj) {
+            clearInterval(timerObj);
+            timerObj = null;
+        }
+        return this;
+    }
+
+    // start timer using current settings (if it's not already running)
+    this.start = function() {
+        if (!timerObj) {
+            this.stop();
+            timerObj = setInterval(fn, t);
+        }
+        return this;
+    }
+
+    // start with new or original interval, stop current interval
+    this.reset = function(newT = t) {
+        t = newT;
+        return this.stop().start();
+    }
+}
+
+let timeToShowAnswer = 10;
+
+let answerTimer = null;
+
+function answerTimerHandler() {
+
+    console.log("got timer event")
+    stopTimer()
+    if (iscurrentoptionLast()) {
+        console.log("last option question over")
+        alert("no answer selected, all options over")
+            // start new question
+        return
+    }
+
+    if (isCurrentOptionCorrect()) {
+        console.log("correct answer missed")
+        alert("correct answer missed")
+            // start new question
+        return
+    }
+
+    console.log("show next option")
+    showNextoption()
+    resetTimer()
+}
+
+function stopTimer() {
+    console.log("stop timer")
+    if (answerTimer) {
+        answerTimer.stop()
+    } else {
+        console.log("stopTimer: timer not set")
+    }
+}
+
+function resetTimer() {
+    console.log("reset timer")
+    if (answerTimer) {
+        answerTimer.reset()
+    } else {
+        console.log(" resetTimer: timer not set")
+    }
 }
 
 function generateRandomSequence(numberInList) {
@@ -118,27 +195,11 @@ function getrandomOptionList(correctAnswer) {
     return randomAnswerList
 }
 
-
-function answerTimerHandler() {
-
-    console.log("got timer event")
-    answerTimer.stop()
-    let continueTimer = checkAnswerOption()
-
-    if (continueTimer) {
-        answerTimer.reset()
-        console.log("set timer for next answer")
-    }
-
-    console.log("done with correct option")
-
-
-}
-
 function checkAnswerOption() {
     if (isCurrentOptionCorrect()) {
         alert("you missed correct answer")
         return false
+
     }
     if (iscurrentoptionLast()) {
         alert("you did not guess any answer")
@@ -148,7 +209,10 @@ function checkAnswerOption() {
 
 }
 
+
 window.addEventListener('load', (event) => {
     console.log('Page loaded');
     setNewQuestionAns()
+    showNewQuestion()
+        // answerTimer = new Timer(answerTimerHandler, timeToShowAnswer * 1000);
 });
