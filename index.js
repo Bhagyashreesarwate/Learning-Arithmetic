@@ -142,8 +142,8 @@ function answerTimerHandler() {
     }
 
     console.log("show next option")
-    showNextoption()
-        // resetTimer()
+
+    // resetTimer()
 }
 
 function stopTimer() {
