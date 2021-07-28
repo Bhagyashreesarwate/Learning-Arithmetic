@@ -22,7 +22,7 @@ function setNewQuestionAns() {
     currentQA.num1 = num1
     currentQA.num2 = num2
     currentQA.correctAnswer = getAnswer(num1, num2)
-    currentQA.randomAnswerSequnce = generateRandomSequence(numberOfAnswerOptions)
+    currentQA.randomAnswerSequnce = getrandomOptionList(currentQA.correctAnswer)
     currentQA.currentPosition = -1
     console.log(JSON.stringify(currentQA))
 }
@@ -37,16 +37,11 @@ function showNewQuestion() {
     resetTimer()
 }
 
-function showNextanswer() {
-    if (currentQA.currentPosition >= currentQA.randomAnswerSequnce.length - 1) {
-        console.error("Already at last position")
-        return false
-    }
-
-
+function showNextOption() {
     currentQA.currentPosition = currentQA.currentPosition + 1
-    elemNum3.value = currentQA.randomSequence[currentQA.currentPosition]
-    return true
+    elemNum3.value = currentQA.randomAnswerSequnce[currentQA.currentPosition]
+    console.log("showing next option " + elemNum3.value)
+    resetTimer()
 }
 
 function getNum1() {
@@ -118,32 +113,31 @@ function Timer(fn, t) {
 }
 
 let answerTimer = null;
-const timeToShowAnswer = 10;
+const timeToShowAnswer = 5;
 
-let iscurrentoptionLast = false;
-let isCurrentOptionCorrect = false;
 
 function answerTimerHandler() {
 
     console.log("got timer event")
     stopTimer()
-    if (iscurrentoptionLast) {
-        console.log("last option question over")
-        alert("no answer selected, all options over")
-        startNewQuestion()
-        return true
-    }
-
-    if (isCurrentOptionCorrect) {
+    if (currentQA.num3 == currentQA.correctAnswer) {
         console.log("correct answer missed")
         alert("correct answer missed")
         startNewQuestion()
         return true
     }
 
-    console.log("show next option")
+    if (currentQA.currentPosition >= currentQA.randomAnswerSequnce.length - 1) {
+        console.log("last option question over")
+        alert("no answer selected, all options over")
+        startNewQuestion()
+        return true
+    }
 
-    // resetTimer()
+
+    console.log("show next option")
+    showNextOption()
+
 }
 
 function stopTimer() {
