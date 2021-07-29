@@ -10,7 +10,7 @@ let currentQA = {
 
 }
 
-const numberOfAnswerOptions = 5;
+
 const elemNum1 = document.getElementById("num1");
 const elemNum2 = document.getElementById("num2");
 const elemNum3 = document.getElementById("num3");
@@ -39,6 +39,7 @@ function showNewQuestion() {
 
 function showNextOption() {
     currentQA.currentPosition = currentQA.currentPosition + 1
+    currentQA.num3 = currentQA.randomAnswerSequnce[currentQA.currentPosition]
     elemNum3.value = currentQA.randomAnswerSequnce[currentQA.currentPosition]
     console.log("showing next option " + elemNum3.value)
     resetTimer()
@@ -58,6 +59,22 @@ function getAnswer(num1, num2) {
     return answer
 }
 
+const passSound = 'https://www.soundjay.com/misc/bell-ringing-04.mp3'
+const failSound = 'https://www.soundjay.com/misc/fail-buzzer-03.mp3'
+
+const audioPass = new Audio(passSound);
+const audioFail = new Audio(failSound);
+
+function playPassFail(status) {
+
+    if (status) {
+        audioPass.play()
+    } else {
+        audioFail.play()
+    }
+    console.log("playing audio for - " + (status));
+}
+
 
 
 let input = document.getElementById("num3")
@@ -65,18 +82,21 @@ input.addEventListener("keyup", function(KeyboardEvent) {
     if (KeyboardEvent.keyCode === 13) {
         stopTimer()
         checkAnswer()
-        startNewQuestion()
+
     }
 
 })
 
 
 function checkAnswer() {
-    if (currentQA.correctAnswer = currentQA.num3) {
-        alert("got correct answer")
+    if (currentQA.correctAnswer == currentQA.num3) {
+        playPassFail(true)
+        setTimeout(function() { alert("got correct answer"); }, 200)
     } else {
-        alert("got wrong answer")
+        playPassFail(false)
+        setTimeout(function() { alert("got wrong answer"); }, 200)
     }
+    startNewQuestion()
 }
 
 function startNewQuestion() {
@@ -120,9 +140,11 @@ function answerTimerHandler() {
 
     console.log("got timer event")
     stopTimer()
+
     if (currentQA.num3 == currentQA.correctAnswer) {
         console.log("correct answer missed")
-        alert("correct answer missed")
+        playPassFail(false)
+        setTimeout(function() { alert("correct answer missed"); }, 200)
         startNewQuestion()
         return true
     }
@@ -134,9 +156,10 @@ function answerTimerHandler() {
         return true
     }
 
-
     console.log("show next option")
     showNextOption()
+
+
 
 }
 
