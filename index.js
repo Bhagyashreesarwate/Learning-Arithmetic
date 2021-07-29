@@ -82,6 +82,7 @@ input.addEventListener("keyup", function(KeyboardEvent) {
     if (KeyboardEvent.keyCode === 13) {
         stopTimer()
         checkAnswer()
+        startNewQuestion()
 
     }
 
@@ -96,7 +97,6 @@ function checkAnswer() {
         playPassFail(false)
         setTimeout(function() { alert("got wrong answer"); }, 200)
     }
-    startNewQuestion()
 }
 
 function startNewQuestion() {
