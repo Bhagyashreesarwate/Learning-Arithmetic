@@ -82,7 +82,6 @@ input.addEventListener("keyup", function(KeyboardEvent) {
     if (KeyboardEvent.keyCode === 13) {
         stopTimer()
         checkAnswer()
-        startNewQuestion()
 
     }
 
@@ -92,10 +91,16 @@ input.addEventListener("keyup", function(KeyboardEvent) {
 function checkAnswer() {
     if (currentQA.correctAnswer == currentQA.num3) {
         playPassFail(true)
-        setTimeout(function() { alert("got correct answer"); }, 200)
+        setTimeout(function() {
+            alert("got correct answer");
+            startNewQuestion();
+        }, 200)
     } else {
         playPassFail(false)
-        setTimeout(function() { alert("got wrong answer"); }, 200)
+        setTimeout(function() {
+            alert("got wrong answer");
+            startNewQuestion()
+        }, 200)
     }
 }
 
@@ -144,8 +149,11 @@ function answerTimerHandler() {
     if (currentQA.num3 == currentQA.correctAnswer) {
         console.log("correct answer missed")
         playPassFail(false)
-        setTimeout(function() { alert("correct answer missed"); }, 200)
-        startNewQuestion()
+        setTimeout(function() {
+            alert("correct answer missed");
+            startNewQuestion();
+        }, 200)
+
         return true
     }
 
