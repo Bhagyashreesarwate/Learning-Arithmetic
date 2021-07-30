@@ -153,7 +153,7 @@ function answerTimerHandler() {
             let span = document.getElementById("close");
             document.getElementById("modalContent").innerText = "You missed the correct answer"
             modal.style.display = "block";
-            span.style.display = "block";
+
             span.onclick = function() {
                     modal.style.display = "none";
                     startNewQuestion();
@@ -250,13 +250,12 @@ function getrandomOptionList(correctAnswer) {
 
 function modalBox() {
     let modal = document.getElementById("myModal")
-    console.log("this is modal box")
     let span = document.getElementById("close");
 
     if (currentQA.num3 == currentQA.correctAnswer) {
         document.getElementById("modalContent").innerText = "Congratulations! You got the correct answer"
         modal.style.display = "block";
-        span.style.display = "block";
+
         span.onclick = function() {
             modal.style.display = "none";
             startNewQuestion()
@@ -265,7 +264,7 @@ function modalBox() {
     } else {
         document.getElementById("modalContent").innerText = "Oops! You got the wrong answer \n Correct answer is  " + currentQA.correctAnswer
         modal.style.display = "block";
-        span.style.display = "block";
+
         span.onclick = function() {
             modal.style.display = "none";
             startNewQuestion()
