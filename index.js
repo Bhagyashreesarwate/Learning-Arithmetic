@@ -82,7 +82,6 @@ input.addEventListener("keyup", function(KeyboardEvent) {
     if (KeyboardEvent.keyCode === 13) {
         stopTimer()
         checkAnswer()
-
     }
 
 })
@@ -92,14 +91,14 @@ function checkAnswer() {
     if (currentQA.correctAnswer == currentQA.num3) {
         playPassFail(true)
         setTimeout(function() {
-            alert("got correct answer");
-            startNewQuestion();
+            // alert("Congratulations! You got the correct answer");
+            modalBox()
         }, 200)
     } else {
         playPassFail(false)
         setTimeout(function() {
-            alert("got wrong answer");
-            startNewQuestion()
+            // alert("Oops! You got the wrong answer");
+            modalBox()
         }, 200)
     }
 }
@@ -138,20 +137,28 @@ function Timer(fn, t) {
 }
 
 let answerTimer = null;
-const timeToShowAnswer = 5;
+const timeToShowAnswer = 8;
 
 
 function answerTimerHandler() {
 
-    console.log("got timer event")
     stopTimer()
 
     if (currentQA.num3 == currentQA.correctAnswer) {
         console.log("correct answer missed")
         playPassFail(false)
         setTimeout(function() {
-            alert("correct answer missed");
-            startNewQuestion();
+            let modal = document.getElementById("myModal")
+            console.log("this is modal box")
+            let span = document.getElementById("close");
+            document.getElementById("modalContent").innerText = "You missed the correct answer"
+            modal.style.display = "block";
+            span.style.display = "block";
+            span.onclick = function() {
+                    modal.style.display = "none";
+                    startNewQuestion();
+                }
+                // alert("correct answer missed")
         }, 200)
 
         return true
@@ -159,12 +166,11 @@ function answerTimerHandler() {
 
     if (currentQA.currentPosition >= currentQA.randomAnswerSequnce.length - 1) {
         console.log("last option question over")
-        alert("no answer selected, all options over")
+        alert("You did not select any option!")
         startNewQuestion()
         return true
     }
 
-    console.log("show next option")
     showNextOption()
 
 
@@ -203,10 +209,9 @@ function generateRandomSequence(numberInList) {
 
         let selectedNumber = Math.floor(Math.random() * originalList.length)
         let element = originalList[selectedNumber]
-            // console.log(`selectedNumber = ${selectedNumber} element = ${element}`)
         originalList = removeElementFromList(originalList, selectedNumber)
         randomSequence.sequence.push(element)
-            // console.log(originalList)
+
 
     }
 
@@ -243,19 +248,32 @@ function getrandomOptionList(correctAnswer) {
     return randomAnswerList
 }
 
-// function checkAnswerOption() {
-//     if (isCurrentOptionCorrect()) {
-//         alert("you missed correct answer")
-//         return false
+function modalBox() {
+    let modal = document.getElementById("myModal")
+    console.log("this is modal box")
+    let span = document.getElementById("close");
 
-//     }
-//     if (iscurrentoptionLast()) {
-//         alert("you did not guess any answer")
-//         return false
-//     }
-//     return true
+    if (currentQA.num3 == currentQA.correctAnswer) {
+        document.getElementById("modalContent").innerText = "Congratulations! You got the correct answer"
+        modal.style.display = "block";
+        span.style.display = "block";
+        span.onclick = function() {
+            modal.style.display = "none";
+            startNewQuestion()
+        }
 
-// }
+    } else {
+        document.getElementById("modalContent").innerText = "Oops! You got the wrong answer \n Correct answer is  " + currentQA.correctAnswer
+        modal.style.display = "block";
+        span.style.display = "block";
+        span.onclick = function() {
+            modal.style.display = "none";
+            startNewQuestion()
+        }
+
+    }
+}
+
 
 
 window.addEventListener('load', (event) => {
