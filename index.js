@@ -7,7 +7,6 @@ let currentQA = {
     correctAnswer: 0,
     randomAnswerSequnce: [0],
     currentPosition: -1
-
 }
 
 
@@ -42,6 +41,7 @@ function showNextOption() {
     currentQA.num3 = currentQA.randomAnswerSequnce[currentQA.currentPosition]
     elemNum3.value = currentQA.randomAnswerSequnce[currentQA.currentPosition]
     console.log("showing next option " + elemNum3.value)
+    playOptionSound()
     resetTimer()
 }
 
@@ -57,6 +57,14 @@ function getAnswer(num1, num2) {
     let answer = num1 + num2
     console.log(`answer = ${answer}`)
     return answer
+}
+
+const optionSound = 'https://www.soundjay.com/buttons/beep-07a.mp3'
+
+const audioOptionSound = new Audio(optionSound)
+
+function playOptionSound() {
+    audioOptionSound.play()
 }
 
 const passSound = 'https://www.soundjay.com/misc/bell-ringing-04.mp3'
@@ -75,9 +83,8 @@ function playPassFail(status) {
     console.log("playing audio for - " + (status));
 }
 
-
-
 let input = document.getElementById("num3")
+
 input.addEventListener("keyup", function(KeyboardEvent) {
     if (KeyboardEvent.keyCode === 13) {
         stopTimer()
@@ -86,18 +93,15 @@ input.addEventListener("keyup", function(KeyboardEvent) {
 
 })
 
-
 function checkAnswer() {
     if (currentQA.correctAnswer == currentQA.num3) {
         playPassFail(true)
         setTimeout(function() {
-            // alert("Congratulations! You got the correct answer");
             modalBox()
         }, 200)
     } else {
         playPassFail(false)
         setTimeout(function() {
-            // alert("Oops! You got the wrong answer");
             modalBox()
         }, 200)
     }
@@ -137,8 +141,7 @@ function Timer(fn, t) {
 }
 
 let answerTimer = null;
-const timeToShowAnswer = 8;
-
+const timeToShowAnswer = 5;
 
 function answerTimerHandler() {
 
@@ -149,16 +152,15 @@ function answerTimerHandler() {
         playPassFail(false)
         setTimeout(function() {
             let modal = document.getElementById("myModal")
-            console.log("this is modal box")
             let span = document.getElementById("close");
+
             document.getElementById("modalContent").innerText = "You missed the correct answer"
             modal.style.display = "block";
 
             span.onclick = function() {
-                    modal.style.display = "none";
-                    startNewQuestion();
-                }
-                // alert("correct answer missed")
+                modal.style.display = "none";
+                startNewQuestion();
+            }
         }, 200)
 
         return true
@@ -170,11 +172,7 @@ function answerTimerHandler() {
         startNewQuestion()
         return true
     }
-
     showNextOption()
-
-
-
 }
 
 function stopTimer() {
@@ -211,8 +209,6 @@ function generateRandomSequence(numberInList) {
         let element = originalList[selectedNumber]
         originalList = removeElementFromList(originalList, selectedNumber)
         randomSequence.sequence.push(element)
-
-
     }
 
     console.log("final sequence:" + JSON.stringify(randomSequence))
@@ -274,12 +270,9 @@ function modalBox() {
 }
 
 
-
 window.addEventListener('load', (event) => {
     console.log('Page loaded');
     setNewQuestionAns()
     answerTimer = new Timer(answerTimerHandler, timeToShowAnswer * 1000);
     showNewQuestion()
-
-
 });
