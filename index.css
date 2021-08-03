@@ -43,9 +43,9 @@ body {
 }
 
 .main {
-    color: rgb(116, 21, 106);
+    color: rgb(126, 4, 126);
     display: inline-block;
-    font-variant-numeric: lining-nums;
+    font-variant-numeric: initial;
     font-size: 40px;
     text-align: center;
     min-height: 9vh;
@@ -60,9 +60,9 @@ body {
 }
 
 .answerBox {
-    color: rgb(95, 37, 3);
+    color: rgba(194, 68, 4, 0.671);
     display: inline-block;
-    font-variant-numeric: lining-nums;
+    font-variant-numeric: initial;
     font-size: 40px;
     text-align: center;
     min-height: 9vh;
