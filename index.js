@@ -33,6 +33,7 @@ function showNewQuestion() {
     currentQA.currentPosition = 0
     currentQA.num3 = num3
     elemNum3.value = num3
+    document.getElementById("num3").focus()
     resetTimer()
 }
 
@@ -42,6 +43,7 @@ function showNextOption() {
     elemNum3.value = currentQA.randomAnswerSequnce[currentQA.currentPosition]
     console.log("showing next option " + elemNum3.value)
     playOptionSound()
+    document.getElementById("num3").focus()
     color()
     resetTimer()
 }
