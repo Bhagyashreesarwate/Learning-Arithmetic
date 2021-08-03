@@ -42,12 +42,48 @@ body {
     outline: none;
 }
 
+.main {
+    color: rgb(116, 21, 106);
+    display: inline-block;
+    font-variant-numeric: lining-nums;
+    font-size: 40px;
+    text-align: center;
+    min-height: 9vh;
+    grid-template-columns: repeat(4, 100px);
+    grid-template-rows: minmax(120px, auto) repeat(5, 100px);
+    border: 2px solid darkgray;
+    border-radius: 15px;
+    background-color: rgb(216, 182, 221);
+    width: 144px;
+    margin: auto;
+    outline: none;
+}
+
+.answerBox {
+    color: rgb(95, 37, 3);
+    display: inline-block;
+    font-variant-numeric: lining-nums;
+    font-size: 40px;
+    text-align: center;
+    min-height: 9vh;
+    grid-template-columns: repeat(4, 100px);
+    grid-template-rows: minmax(120px, auto) repeat(5, 100px);
+    border: 2px solid darkgray;
+    border-radius: 15px;
+    background-color: rgb(216, 182, 221);
+    width: 144px;
+    margin: auto;
+    outline: none;
+}
+
 .modal {
     display: none;
     text-align: center;
     padding: 20px;
-    margin: 50px;
-    width: 92.4%;
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    width: 77%;
     font-weight: bold;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-size: 40px;
@@ -65,5 +101,5 @@ body {
 }
 
 #close:hover {
-    color: rgb(121, 121, 121);
+    color: rgb(155, 153, 153);
 }

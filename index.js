@@ -42,6 +42,7 @@ function showNextOption() {
     elemNum3.value = currentQA.randomAnswerSequnce[currentQA.currentPosition]
     console.log("showing next option " + elemNum3.value)
     playOptionSound()
+    color()
     resetTimer()
 }
 
@@ -59,7 +60,7 @@ function getAnswer(num1, num2) {
     return answer
 }
 
-const optionSound = 'https://www.soundjay.com/buttons/beep-07a.mp3'
+const optionSound = 'https://www.soundjay.com/buttons/button-14.mp3'
 
 const audioOptionSound = new Audio(optionSound)
 
@@ -81,6 +82,15 @@ function playPassFail(status) {
         audioFail.play()
     }
     console.log("playing audio for - " + (status));
+}
+
+function color() {
+    let x = document.getElementById("num3")
+    if (x.className == "main") {
+        x.className = "answerBox";
+    } else {
+        x.className = "main";
+    }
 }
 
 let input = document.getElementById("num3")
